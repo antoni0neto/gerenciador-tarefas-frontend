@@ -1,9 +1,29 @@
+import { AiFillDelete } from "react-icons/ai";
+import "./TaskItem.scss";
+
 const TaskItem = ({ task }) => {
     return (
-        <div>
-            <h3>{task.title}</h3>
-            <p>{task.description}</p>
-            <p>{task.isCompleted ? "Concluído" : "Pendente"}</p>
+        <div className="task-item-container">
+            <div className="task-description">
+                <label
+                    className={
+                        task.isCompleted
+                            ? "checkbox-container-completed"
+                            : "checkbox-container"
+                    }
+                >
+                    {task.description}
+                    <input type="checkbox" defaultChecked={task.isCompleted} />
+                    <span
+                        className={
+                            task.isCompleted
+                                ? "checkmark completed"
+                                : "checkmark"
+                        }
+                    ></span>
+                </label>
+                <AiFillDelete size={18} color="#F97474" />
+            </div>
         </div>
     );
 };
