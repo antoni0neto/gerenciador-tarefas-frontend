@@ -21,8 +21,8 @@ const TaskItem = ({ task }) => {
                                 : "checkmark"
                         }
                     ></span>
+                    <AiFillDelete size={18} color="#F97474" />
                 </label>
-                <AiFillDelete size={18} color="#F97474" />
             </div>
         </div>
     );
