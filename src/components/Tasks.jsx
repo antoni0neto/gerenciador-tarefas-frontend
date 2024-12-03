@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import TaskItem from "./components/TaskItem";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
-const App = () => {
+import "./Tasks.scss";
+
+const Tasks = () => {
     const [tasks, setTasks] = useState([
         {
             id: 1,
@@ -42,13 +43,32 @@ const App = () => {
     }, []);
 
     return (
-        <div>
-            <h1>Tarefas:</h1>
-            {tasks.map((task) => {
-                return <TaskItem key={task.id} task={task} />;
-            })}
+        <div className="tasks-container">
+            <h2>Minhas tarefas</h2>
+
+            <div className="last-tasks">
+                <h3>Últimas tarefas</h3>
+                {tasks
+                    .filter((task) => task.isCompleted === false)
+                    .map((task) => (
+                        <div className="tasks-list" key={task.id}>
+                            <p>{task.description}</p>
+                        </div>
+                    ))}
+            </div>
+
+            <div className="completed-tasks">
+                <h3>Tarefas concluídas</h3>
+                {tasks
+                    .filter((task) => task.isCompleted === true)
+                    .map((task) => (
+                        <div className="tasks-list" key={task.id}>
+                            <p>{task.description}</p>
+                        </div>
+                    ))}
+            </div>
         </div>
     );
 };
 
-export default App;
+export default Tasks;
