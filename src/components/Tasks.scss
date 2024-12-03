@@ -12,7 +12,6 @@
 
     h3 {
         font-size: 18px;
-        margin-bottom: 24px;
     }
 
     .last-tasks {
@@ -20,6 +19,10 @@
         overflow-y: hidden;
         display: flex;
         flex-direction: column;
+
+        .tasks-list {
+            margin-top: 28px;
+        }
     }
 
     .completed-tasks {
