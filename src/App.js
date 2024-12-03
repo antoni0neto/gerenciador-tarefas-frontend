@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TaskItem from "./components/TaskItem";
+import axios from "axios";
 
 const App = () => {
     const [tasks, setTasks] = useState([
@@ -22,6 +23,23 @@ const App = () => {
             isCompleted: false,
         },
     ]);
+
+    const fetchTasks = async () => {
+        try {
+            const { data } = await axios.get(
+                // "https://neto-task-manager-ddefc5e648fa.herokuapp.com/tasks"
+                "http://localhost:8000/tasks"
+            );
+            console.log(data);
+            setTasks(data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        fetchTasks();
+    }, []);
 
     return (
         <div>
