@@ -8,7 +8,7 @@ import { FaPlus } from "react-icons/fa";
 import axios from "axios";
 import { useAlert } from "react-alert";
 
-const AddTask = () => {
+const AddTask = ({ fetchTasks }) => {
     const [task, setTask] = useState("");
 
     const alert = useAlert();
@@ -29,8 +29,14 @@ const AddTask = () => {
                 description: task,
                 isCompleted: false,
             });
+
+            await fetchTasks();
+
+            setTask("");
+
+            alert.success("Tarefa adicionada com sucesso.");
         } catch (error) {
-            console.error(error);
+            alert.error("Ocorreu um erro ao adicionar a tarefa.");
         }
     };
 
