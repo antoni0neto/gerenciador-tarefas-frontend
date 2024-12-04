@@ -13,7 +13,7 @@ const TaskItem = ({ task, fetchTasks }) => {
             await axios.delete(`http://localhost:8000/tasks/${task._id}`);
             await fetchTasks();
             alert.success("Tarefa removida com sucesso.");
-        } catch (error) {
+        } catch (_error) {
             alert.error("Ocorreu um erro ao remover a tarefa.");
         }
     };
@@ -24,7 +24,7 @@ const TaskItem = ({ task, fetchTasks }) => {
                 isCompleted: !task.isCompleted,
             });
             await fetchTasks();
-        } catch (error) {
+        } catch (_error) {
             alert.error("Ocorreu um erro ao atualizar a tarefa.");
         }
     };
