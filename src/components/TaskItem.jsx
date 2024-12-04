@@ -1,19 +1,31 @@
 import axios from "axios";
-import "./TaskItem.scss";
 
 import { AiFillDelete } from "react-icons/ai";
 import { useAlert } from "react-alert";
 
+import "./TaskItem.scss";
+
 const TaskItem = ({ task, fetchTasks }) => {
     const alert = useAlert();
 
-    const handleTaskRemove = async () => {
+    const handleTaskDeletion = async () => {
         try {
-            axios.delete(`http://localhost:8000/tasks/${task._id}`);
+            await axios.delete(`http://localhost:8000/tasks/${task._id}`);
             await fetchTasks();
             alert.success("Tarefa removida com sucesso.");
         } catch (error) {
-            console.log(error);
+            alert.error("Ocorreu um erro ao remover a tarefa.");
+        }
+    };
+
+    const handleTaskCompletionChange = async () => {
+        try {
+            await axios.patch(`http://localhost:8000/tasks/${task._id}`, {
+                isCompleted: !task.isCompleted,
+            });
+            await fetchTasks();
+        } catch (error) {
+            alert.error("Ocorreu um erro ao atualizar a tarefa.");
         }
     };
 
@@ -21,6 +33,7 @@ const TaskItem = ({ task, fetchTasks }) => {
         <div className="task-item-container">
             <div className="task-description">
                 <label
+                    onClick={handleTaskCompletionChange}
                     className={
                         task.isCompleted
                             ? "checkbox-container-completed"
@@ -43,7 +56,7 @@ const TaskItem = ({ task, fetchTasks }) => {
                 <AiFillDelete
                     size={18}
                     color="#F97474"
-                    onClick={() => handleTaskRemove()}
+                    onClick={handleTaskDeletion}
                 />
             </div>
         </div>

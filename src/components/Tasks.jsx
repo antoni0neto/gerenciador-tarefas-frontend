@@ -52,6 +52,7 @@ const Tasks = () => {
                             <TaskItem
                                 key={completedTask._id}
                                 task={completedTask}
+                                fetchTasks={fetchTasks}
                             />
                         ))}
                 </div>
