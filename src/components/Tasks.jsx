@@ -1,42 +1,21 @@
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { useEffect, useState } from "react";
 
 import "./Tasks.scss";
+
 import TaskItem from "./TaskItem";
 import AddTask from "./AddTask";
 
 const Tasks = () => {
-    const [tasks, setTasks] = useState([
-        {
-            id: 1,
-            title: "Tarefa 1",
-            description: "Descrição da tarefa 1",
-            isCompleted: false,
-        },
-        {
-            id: 2,
-            title: "Tarefa 2",
-            description: "Descrição da tarefa 2",
-            isCompleted: true,
-        },
-        {
-            id: 3,
-            title: "Tarefa 3",
-            description: "Descrição da tarefa 3",
-            isCompleted: false,
-        },
-    ]);
+    const [tasks, setTasks] = useState([]);
 
     const fetchTasks = async () => {
         try {
-            const { data } = await axios.get(
-                // "https://neto-task-manager-ddefc5e648fa.herokuapp.com/tasks"
-                "http://localhost:8000/tasks"
-            );
-            console.log(data);
+            const { data } = await axios.get("http://localhost:8000/tasks");
+
             setTasks(data);
         } catch (error) {
-            console.error(error);
+            console.log(error);
         }
     };
 
@@ -46,29 +25,29 @@ const Tasks = () => {
 
     return (
         <div className="tasks-container">
-            <h2>Minhas tarefas</h2>
+            <h2>Minhas Tarefas</h2>
 
             <div className="last-tasks">
-                <h3>Últimas tarefas</h3>
+                <h3>Últimas Tarefas</h3>
                 <AddTask fetchTasks={fetchTasks} />
-                {tasks
-                    .filter((task) => task.isCompleted === false)
-                    .map((task) => (
-                        <div className="tasks-list" key={task.id}>
-                            <TaskItem task={task} />
-                        </div>
-                    ))}
+                <div className="tasks-list">
+                    {tasks
+                        .filter((task) => task.isCompleted === false)
+                        .map((lastTask) => (
+                            <TaskItem task={lastTask} />
+                        ))}
+                </div>
             </div>
 
             <div className="completed-tasks">
-                <h3>Tarefas concluídas</h3>
-                {tasks
-                    .filter((task) => task.isCompleted === true)
-                    .map((task) => (
-                        <div className="tasks-list" key={task.id}>
-                            <TaskItem task={task} />
-                        </div>
-                    ))}
+                <h3>Tarefas Concluídas</h3>
+                <div className="tasks-list">
+                    {tasks
+                        .filter((task) => task.isCompleted)
+                        .map((completedTask) => (
+                            <TaskItem task={completedTask} />
+                        ))}
+                </div>
             </div>
         </div>
     );
