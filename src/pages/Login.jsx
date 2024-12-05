@@ -9,12 +9,11 @@ const Login = () => {
     return (
         <div className="login-container">
             <img src={logo} className="logo" alt="Full Stack Club" />
-            <CustomButton
-                className="button-container"
-                onClick={() => navigate("/")}
-            >
-                Entrar
-            </CustomButton>
+            <div className="button-container">
+                <CustomButton onClick={() => navigate("/")}>
+                    Entrar
+                </CustomButton>
+            </div>
         </div>
     );
 };
