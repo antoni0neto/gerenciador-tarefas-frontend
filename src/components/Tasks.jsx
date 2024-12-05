@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import axios from "axios";
 
 import "./Tasks.scss";
@@ -12,7 +12,7 @@ const Tasks = () => {
 
     const alert = useAlert();
 
-    const fetchTasks = async () => {
+    const fetchTasks = useCallback(async () => {
         try {
             const { data } = await axios.get("http://localhost:8000/tasks");
 
@@ -20,7 +20,7 @@ const Tasks = () => {
         } catch (_error) {
             alert.error("Ocorreu um erro ao buscar as tarefas.");
         }
-    };
+    }, [alert]);
 
     const lastTasks = useMemo(
         () => tasks.filter((task) => task.isCompleted === false),
@@ -33,7 +33,7 @@ const Tasks = () => {
 
     useEffect(() => {
         fetchTasks();
-    }, []);
+    }, [fetchTasks]);
 
     return (
         <div className="tasks-container">
